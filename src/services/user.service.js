@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const { getOffset } = require('../utils/query');
 const ApiError = require('../utils/ApiError');
 const { encryptData } = require('../utils/auth');
-const config = require('../config/config.js');
+const config = require('../config/config');
 const db = require('../db/models');
 const roleService = require('./role.service');
 

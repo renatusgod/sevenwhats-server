@@ -3,6 +3,7 @@ const app = require('./app');
 const models = require('./db/models');
 const config = require('./config/config');
 const logger = require('./config/logger');
+const { instanceService } = require('./services');
 
 // sync database
 models.sequelize.sync();
@@ -12,6 +13,8 @@ const server = http.Server(app);
 const port = config.port || 3000;
 server.listen(port, () => {
 	logger.info(`App is listening on port ${config.port}`);
+
+	instanceService.startAllSessions();
 });
 
 const exitHandler = () => {

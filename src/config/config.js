@@ -79,6 +79,7 @@ module.exports = {
 		cookieExpirationHours: envVars.COOKIE_EXPIRATION_HOURS,
 	},
 	sqlDB: {
+		username: envVars.SQL_USERNAME,
 		user: envVars.SQL_USERNAME,
 		host: envVars.SQL_HOST,
 		database: envVars.SQL_DATABASE_NAME,

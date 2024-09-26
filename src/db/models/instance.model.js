@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-	const user = sequelize.define(
-		'user',
+	const instance = sequelize.define(
+		'instance',
 		{
 			id: {
 				type: DataTypes.INTEGER,
@@ -8,18 +8,41 @@ module.exports = (sequelize, DataTypes) => {
 				primaryKey: true,
 				autoIncrement: true,
 			},
-			name: {
-				type: DataTypes.STRING,
-				allowNull: false,
-			},
-			email: {
-				type: DataTypes.STRING,
-				allowNull: false,
-				unique: true,
-			},
-			role_id: {
+			user_id: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
+			},
+			session: {
+				type: DataTypes.TEXT,
+				allowNull: true,
+			},
+			web_hook: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			events: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			qr_code: {
+				type: DataTypes.TEXT,
+				allowNull: true,
+			},
+			status: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			name: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			is_multi_device: {
+				type: DataTypes.BOOLEAN,
+				allowNull: true,
+			},
+			retries: {
+				type: DataTypes.INTEGER,
+				allowNull: true,
 			},
 			created_date_time: {
 				type: DataTypes.DATE,
@@ -31,33 +54,29 @@ module.exports = (sequelize, DataTypes) => {
 				defaultValue: DataTypes.NOW,
 				allowNull: false,
 			},
-			password: {
-				type: DataTypes.STRING,
-				allowNull: false,
-			},
 		},
 		{
 			/**
 			 * By default, sequelize will automatically transform all passed model names into plural
 			 * References: https://sequelize.org/master/manual/model-basics.html#table-name-inference
 			 */
-			tableName: 'user',
+			tableName: 'instance',
 		}
 	);
 
-	user.associate = (models) => {
-		user.hasMany(models.instance, {
+	instance.associate = (models) => {
+		instance.hasMany(models.session, {
 			foreignKey: 'id',
 			onDelete: 'CASCADE',
 		});
 	};
 
-	user.associate = (models) => {
-		user.belongsTo(models.role, {
-			foreignKey: 'role_id',
+	instance.associate = (models) => {
+		instance.belongsTo(models.user, {
+			foreignKey: 'user_id',
 			onDelete: 'CASCADE',
 		});
 	};
 
-	return user;
+	return instance;
 };
