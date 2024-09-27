@@ -1,5 +1,5 @@
-const expressJwt = require('express-jwt');
-const config = require('./config.js');
+const { expressjwt } = require('express-jwt');
+const config = require('./config');
 
 async function isRevoked(_req, _payload, done) {
 	done();
@@ -7,7 +7,7 @@ async function isRevoked(_req, _payload, done) {
 
 function jwt() {
 	const { secret } = config.jwt;
-	return expressJwt({
+	return expressjwt({
 		secret,
 		getToken: function fromHeaderOrQuerystring(req) {
 			const token = req.headers.authorization
