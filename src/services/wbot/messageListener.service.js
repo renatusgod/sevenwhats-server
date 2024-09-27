@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { getContentType } = require('baileys');
+const { getContentType } = require('@whiskeysockets/baileys');
 const logger = require('../../config/logger');
 
 const typesMessage = [

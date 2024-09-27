@@ -1,4 +1,4 @@
-const { proto, initAuthCreds, BufferJSON } = require('baileys');
+const { proto, initAuthCreds, BufferJSON } = require('@whiskeysockets/baileys');
 
 const db = require('../db/models');
 

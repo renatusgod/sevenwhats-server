@@ -3,7 +3,7 @@ const {
 	DisconnectReason,
 	fetchLatestBaileysVersion,
 	makeInMemoryStore,
-} = require('baileys');
+} = require('@whiskeysockets/baileys');
 const P = require('pino');
 const pgAuthState = require('../helpers/pgAuthState');
 const db = require('../db/models');
