@@ -21,8 +21,7 @@ async function getWbot(instanceId) {
 	);
 
 	if (sessionIndex === -1) {
-		// eslint-disable-next-line no-undef
-		throw new AppError('ERR_WAPP_NOT_INITIALIZED');
+		return null;
 	}
 
 	return sessions[sessionIndex];

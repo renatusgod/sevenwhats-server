@@ -29,7 +29,7 @@ async function startSession(instance) {
 
 async function restartSession(instance) {
 	try {
-		await wbot.removeWbot(instance.id);
+		await wbot.removeWbot(instance.id, false);
 
 		startSession(instance);
 	} catch (error) {
