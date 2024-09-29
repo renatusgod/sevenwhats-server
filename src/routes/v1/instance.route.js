@@ -45,6 +45,14 @@ router
 	);
 
 router
+	.route('/:instanceId/restart-instance')
+	.post(
+		grantAccess('createAny', resources.INSTANCE),
+		validate(instanceValidation.instanceId),
+		instanceController.restartInstance
+	);
+
+router
 	.route('/:instanceId/qrcode')
 	.post(
 		grantAccess('readyAny', resources.INSTANCE),

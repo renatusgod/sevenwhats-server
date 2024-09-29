@@ -132,6 +132,8 @@ async function updateInstance(req) {
 		)
 		.then((data) => data[1]);
 
+	sessionService.restartInstance(updatedInstance.id);
+
 	return {
 		id: updatedInstance.id,
 		name: updatedInstance.name,
@@ -162,6 +164,18 @@ async function startAllSessions() {
 	}
 }
 
+async function restartInstance(instanceId) {
+	const instance = await getInstanceModelById(instanceId);
+
+	if (!instance) {
+		throw new ApiError(httpStatus.NOT_FOUND, 'Instance not found');
+	}
+
+	sessionService.restartSession(instance);
+
+	return instance;
+}
+
 async function qrcode(instanceId) {
 	const instance = await getInstanceById(instanceId);
 
@@ -183,6 +197,7 @@ module.exports = {
 	deleteInstanceById,
 	updateInstance,
 	startInstance,
+	restartInstance,
 	startAllSessions,
 	qrcode,
 };
