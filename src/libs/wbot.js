@@ -33,9 +33,10 @@ async function removeWbot(instanceId, isLogout = true) {
 		if (sessionIndex !== -1) {
 			if (isLogout) {
 				sessions[sessionIndex].logout();
-				sessions[sessionIndex].ws.close();
 			}
 
+			sessions[sessionIndex].ev.removeAllListeners('connection.update');
+			sessions[sessionIndex].ws.close();
 			sessions.splice(sessionIndex, 1);
 		}
 	} catch (error) {
