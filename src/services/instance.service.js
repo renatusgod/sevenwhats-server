@@ -176,6 +176,10 @@ async function restartInstance(instanceId) {
 	return instance;
 }
 
+async function logout(instanceId) {
+	await sessionService.logout(instanceId);
+}
+
 async function qrcode(instanceId) {
 	const instance = await getInstanceById(instanceId);
 
@@ -199,5 +203,6 @@ module.exports = {
 	startInstance,
 	restartInstance,
 	startAllSessions,
+	logout,
 	qrcode,
 };

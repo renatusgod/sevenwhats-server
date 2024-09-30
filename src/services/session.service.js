@@ -37,8 +37,17 @@ async function restartSession(instance) {
 	}
 }
 
+async function logout(instanceId) {
+	try {
+		await wbot.removeWbot(instanceId);
+	} catch (error) {
+		logger.error(`logout error: ${error?.message}`);
+	}
+}
+
 module.exports = {
 	createSession,
 	startSession,
 	restartSession,
+	logout,
 };

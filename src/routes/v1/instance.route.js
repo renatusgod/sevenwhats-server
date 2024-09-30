@@ -53,6 +53,14 @@ router
 	);
 
 router
+	.route('/:instanceId/logout')
+	.post(
+		grantAccess('createAny', resources.INSTANCE),
+		validate(instanceValidation.instanceId),
+		instanceController.logout
+	);
+
+router
 	.route('/:instanceId/qrcode')
 	.post(
 		grantAccess('readyAny', resources.INSTANCE),

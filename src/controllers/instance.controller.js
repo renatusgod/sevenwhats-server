@@ -53,6 +53,11 @@ const restartInstance = catchAsync(async (req, res) => {
 	res.send(instance);
 });
 
+const logout = catchAsync(async (req, res) => {
+	await instanceService.logout(req.params.instanceId);
+	res.send();
+});
+
 const qrcode = catchAsync(async (req, res) => {
 	const { instanceId } = req.params;
 	const result = await instanceService.qrcode(instanceId);
@@ -80,6 +85,7 @@ module.exports = {
 	updateInstance,
 	startInstance,
 	restartInstance,
+	logout,
 	qrcode,
 	sendMessage,
 };
