@@ -127,12 +127,11 @@ async function updateInstance(req) {
 				where: { id: req.params.instanceId },
 				returning: true,
 				plain: true,
-				raw: true,
 			}
 		)
 		.then((data) => data[1]);
 
-	sessionService.restartInstance(updatedInstance.id);
+	sessionService.restartSession(updatedInstance);
 
 	return {
 		id: updatedInstance.id,
@@ -178,6 +177,34 @@ async function restartInstance(instanceId) {
 
 async function logout(instanceId) {
 	await sessionService.logout(instanceId);
+
+	const instance = await getInstanceModelById(instanceId);
+
+	if (!instance) {
+		throw new ApiError(httpStatus.NOT_FOUND, 'Instance not found');
+	}
+
+	await instance.update({
+		status: 'CLOSED',
+		session: null,
+	});
+
+	await db.session.destroy({
+		where: {
+			instance_id: instance.id,
+		},
+	});
+
+	return {
+		id: instance.id,
+		name: instance.name,
+		web_hook: instance.web_hook,
+		events: instance.events,
+		qr_code: instance.qr_code,
+		status: instance.status,
+		created_date_time: instance.created_date_time,
+		modified_date_time: instance.modified_date_time,
+	};
 }
 
 async function qrcode(instanceId) {

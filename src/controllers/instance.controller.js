@@ -55,7 +55,7 @@ const restartInstance = catchAsync(async (req, res) => {
 
 const logout = catchAsync(async (req, res) => {
 	await instanceService.logout(req.params.instanceId);
-	res.send();
+	res.send({ status: 'CLOSED' });
 });
 
 const qrcode = catchAsync(async (req, res) => {

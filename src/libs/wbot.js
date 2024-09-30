@@ -29,7 +29,9 @@ async function getWbot(instanceId) {
 
 async function removeWbot(instanceId, isLogout = true) {
 	try {
-		const sessionIndex = sessions.findIndex((s) => s.id === instanceId);
+		const sessionIndex = sessions.findIndex(
+			(s) => s.id === parseFloat(instanceId)
+		);
 		if (sessionIndex !== -1) {
 			if (isLogout) {
 				sessions[sessionIndex].logout();
