@@ -39,7 +39,9 @@ async function getUserById(id) {
 }
 
 async function createUser(req) {
-	const { email, name, password, roleId } = req.body;
+	const { email, name, password } = req.body;
+	const { roleId } = 2; // user
+
 	const hashedPassword = await encryptData(password);
 	const user = await getUserByEmail(email);
 
@@ -137,6 +139,8 @@ async function updateUser(req) {
 			);
 		}
 	}
+
+	req.body.roleId = 2; // user
 
 	const updatedUser = await db.user
 		.update(
