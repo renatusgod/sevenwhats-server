@@ -62,8 +62,8 @@ router
 
 router
 	.route('/:instanceId/qrcode')
-	.post(
-		grantAccess('readyAny', resources.INSTANCE),
+	.get(
+		grantAccess('readAny', resources.INSTANCE),
 		validate(instanceValidation.instanceId),
 		instanceController.qrcode
 	);
@@ -74,6 +74,13 @@ router
 		grantAccess('createAny', resources.INSTANCE),
 		validate(instanceValidation.sendMessage),
 		instanceController.sendMessage
+	);
+
+router
+	.route('/:instanceId/send-media')
+	.post(
+		grantAccess('createAny', resources.INSTANCE),
+		instanceController.sendMedia
 	);
 
 module.exports = router;

@@ -3,6 +3,7 @@ const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { instanceService } = require('../services');
 const { sendMessageService } = require('../services/wbot');
+const { sendMediaService } = require('../services/wbot');
 
 const createInstance = catchAsync(async (req, res) => {
 	const instance = await instanceService.createInstance(req);
@@ -77,6 +78,24 @@ const sendMessage = catchAsync(async (req, res) => {
 	res.send(result);
 });
 
+const sendMedia = catchAsync(async (req, res) => {
+	const { remoteJid, fileUrl, fileBase64, caption, fileName, mimetype } =
+		req.body;
+	const { instanceId } = req.params;
+
+	const result = await sendMediaService.sendMedia(
+		instanceId,
+		remoteJid,
+		fileUrl,
+		fileBase64,
+		caption,
+		fileName,
+		mimetype
+	);
+
+	res.send(result);
+});
+
 module.exports = {
 	createInstance,
 	getInstances,
@@ -88,4 +107,5 @@ module.exports = {
 	logout,
 	qrcode,
 	sendMessage,
+	sendMedia,
 };
