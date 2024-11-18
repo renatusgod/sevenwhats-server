@@ -31,7 +31,7 @@ async function sendMedia(
 	}
 
 	if (!document) {
-		return { data: 'Arquivo inválido' }
+		return { data: 'Arquivo inválido' };
 	}
 
 	try {
