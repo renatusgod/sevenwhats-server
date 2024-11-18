@@ -23,9 +23,9 @@ async function sendMedia(
 		const response = await request.get(fileUrl);
 
 		if (response?.status === 200) {
-			document = Buffer.from(response.data, 'binary');;
+			document = Buffer.from(response.data, 'binary');
 		}
-		
+
 	} else if (fileBase64) {
 		document = Buffer.from(fileBase64, 'base64');
 	}
