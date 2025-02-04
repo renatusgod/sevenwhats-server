@@ -25,7 +25,6 @@ async function sendMedia(
 		if (response?.status === 200) {
 			document = Buffer.from(response.data, 'binary');
 		}
-
 	} else if (fileBase64) {
 		document = Buffer.from(fileBase64, 'base64');
 	}
@@ -36,7 +35,7 @@ async function sendMedia(
 
 	try {
 		const options = {
-			document: document,
+			image: document,
 			caption,
 			fileName,
 			mimetype,
