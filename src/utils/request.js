@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../config/logger');
 
 function post(url, body) {
 	axios
@@ -9,14 +10,11 @@ function post(url, body) {
 			},
 		})
 		.then(() => {})
-		.catch((error) =>
-			logger.error(`post error: ${error?.message}`)
-		);
+		.catch((error) => logger.error(`post error: ${error?.message}`));
 }
 
-
-async function get(url) {
-	const response = await axios.get(url);
+async function get(url, type) {
+	const response = await axios.get(url, type);
 
 	return response;
 }

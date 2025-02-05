@@ -4,6 +4,7 @@ const instanceValidation = require('../../validations/instance.validation');
 const instanceController = require('../../controllers/instance.controller');
 const { grantAccess } = require('../../middlewares/validateAccessControl');
 const { resources } = require('../../config/roles');
+const { upload } = require('../../middlewares/multer');
 
 const router = express.Router();
 
@@ -81,6 +82,14 @@ router
 	.post(
 		grantAccess('createAny', resources.INSTANCE),
 		instanceController.sendMedia
+	);
+
+router
+	.route('/:instanceId/send-image')
+	.post(
+		grantAccess('createAny', resources.INSTANCE),
+		upload.single('file'),
+		instanceController.sendImage
 	);
 
 module.exports = router;
