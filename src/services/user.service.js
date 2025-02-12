@@ -5,6 +5,7 @@ const { encryptData } = require('../utils/auth');
 const config = require('../config/config');
 const db = require('../db/models');
 const roleService = require('./role.service');
+const { v4: uuidv4 } = require('uuid');
 
 async function getUserByEmail(email) {
 	const user = await db.user.findOne({
@@ -25,6 +26,22 @@ async function getUserByEmail(email) {
 async function getUserById(id) {
 	const user = await db.user.findOne({
 		where: { id },
+		include: [
+			{
+				model: db.role,
+				require: true,
+				attributes: ['id', 'name'],
+			},
+		],
+		raw: true,
+	});
+
+	return user;
+}
+
+async function getUserByApiKey(apikey) {
+	const user = await db.user.findOne({
+		where: { api_key: apikey },
 		include: [
 			{
 				model: db.role,
@@ -59,6 +76,7 @@ async function createUser(req) {
 			email,
 			role_id: roleId,
 			password: hashedPassword,
+			api_key: uuidv4()
 		})
 		.then((resultEntity) => resultEntity.get({ plain: true }));
 
@@ -156,6 +174,7 @@ async function updateUser(req) {
 module.exports = {
 	getUserByEmail,
 	getUserById,
+	getUserByApiKey,
 	createUser,
 	updateUser,
 	getUsers,

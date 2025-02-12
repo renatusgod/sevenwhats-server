@@ -4,6 +4,7 @@ const userRoute = require('./user.route');
 const roleRoute = require('./role.route');
 const docsRoute = require('./docs.route');
 const instanceRoute = require('./instance.route');
+const publicRoute = require('./public.route');
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use('/users', userRoute);
 router.use('/roles', roleRoute);
 router.use('/docs', docsRoute);
 router.use('/instances', instanceRoute);
+router.use('/public', publicRoute);
 
 module.exports = router;

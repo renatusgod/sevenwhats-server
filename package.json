@@ -65,6 +65,7 @@
     "sharp": "^0.32.6",
     "swagger-jsdoc": "^6.0.2",
     "swagger-ui-express": "^4.1.6",
+    "uuid": "^11.0.5",
     "winston": "^3.3.3",
     "xss-clean": "^0.1.1",
     "yesql": "^5.0.0"

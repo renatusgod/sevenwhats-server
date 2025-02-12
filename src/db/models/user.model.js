@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
 			password: {
 				type: DataTypes.STRING,
 				allowNull: false,
+			},			
+			api_key: {
+				type: DataTypes.STRING,
+				allowNull: true,
+				unique: true,
 			},
 		},
 		{
