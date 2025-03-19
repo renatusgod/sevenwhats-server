@@ -18,7 +18,7 @@ function  sendMessageWebhook(url, message) {
 			},
 		})
 		.then(() => {
-			logger.info('webhook sended to instanceId ' + instanceId + ':', message);
+			logger.info('webhook sended to instanceId ' + message.instanceId + ':', message);
 		})
 		.catch((error) =>
 			logger.error(`sendMessageWebhook error: ${error?.message}`)
