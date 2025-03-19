@@ -9,7 +9,7 @@ const typesMessage = [
 	'extendedTextMessage',
 ];
 
-function sendMessageWebhook(url, message) {
+function  sendMessageWebhook(url, message) {
 	axios
 		.post(url, message, {
 			headers: {
@@ -17,7 +17,9 @@ function sendMessageWebhook(url, message) {
 				Authorization: 'Bearer your_token', // If you need to add headers
 			},
 		})
-		.then(() => {})
+		.then(() => {
+			logger.info('webhook sended to instanceId ' + instanceId + ':', message);
+		})
 		.catch((error) =>
 			logger.error(`sendMessageWebhook error: ${error?.message}`)
 		);
@@ -51,7 +53,7 @@ function getBodyMessage(message) {
 	return types[type];
 }
 
-function handleMessage(wbot, data) {
+function handleMessage(wbot, data, instanceId) {
 	const [webMessage] = data.messages;
 
 	if (!webMessage) {
@@ -67,18 +69,18 @@ function handleMessage(wbot, data) {
 	}
 
 	if (webhook) {
-		sendMessageWebhook(webhook, webMessage);
+		sendMessageWebhook(webhook, { ...webMessage, instanceId: instanceId });
 	}
 }
 
-async function listenMessage(wbot) {
+async function listenMessage(wbot, instanceId) {
 	try {
 		wbot.ev.on('messages.upsert', async (data) => {
-			handleMessage(wbot, data);
+			handleMessage(wbot, data, instanceId);
 		});
 
 		wbot.ev.on('messages.update', (data) => {
-			logger.info('listenMessage update:', data);
+			logger.info('listenMessage update to instanceId ' + instanceId + ':', data);
 		});
 	} catch (error) {
 		logger.error('listenMessage error', error);

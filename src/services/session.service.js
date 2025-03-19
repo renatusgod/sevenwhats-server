@@ -21,7 +21,7 @@ async function startSession(instance) {
 
 		const wsocket = await wbot.initWbot(instance);
 
-		messageListenerService.listenMessage(wsocket);
+		messageListenerService.listenMessage(wsocket, instance.id);
 	} catch (error) {
 		logger.error(`startSession error: ${error?.message}`);
 	}
