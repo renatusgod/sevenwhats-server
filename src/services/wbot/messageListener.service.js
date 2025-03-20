@@ -32,7 +32,7 @@ async function sendMessageWebhook(url, message) {
 		});
 	
 		if (!data) {
-			logger.info('webhook whitout response to instanceId ' + message.instanceId);
+			logger.info('webhook without response to instanceId ' + message.instanceId);
 			return;
 		}
 	
