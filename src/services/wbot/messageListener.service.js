@@ -9,20 +9,42 @@ const typesMessage = [
 	'extendedTextMessage',
 ];
 
-function  sendMessageWebhook(url, message) {
-	axios
-		.post(url, message, {
+async function sendMessageWebhook(url, message) {
+	// axios
+	// 	.post(url, message, {
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			Authorization: 'Bearer your_token', // If you need to add headers
+	// 		},
+	// 	})
+	// 	.then((response) => {
+	// 		logger.info('webhook sended to instanceId ' + message.instanceId + ': ' + JSON.stringify(response));
+	// 	})
+	// 	.catch((error) =>
+	// 		logger.error(`webhook sended to instanceId ${message.instanceId}: ${error?.message}`)
+	// 	);
+
+	try {
+		const {data} = await axios.post(url, message, {
 			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer your_token', // If you need to add headers
-			},
-		})
-		.then(() => {
-			logger.info('webhook sended to instanceId ' + message.instanceId + ':', message);
-		})
-		.catch((error) =>
-			logger.error(`sendMessageWebhook error: ${error?.message}`)
-		);
+				'Content-Type': 'application/json'
+			}
+		});
+	
+		if (!data) {
+			logger.info('webhook whitout response to instanceId ' + message.instanceId);
+			return;
+		}
+	
+		if (data.status === 200) {
+			logger.info('webhook sended to instanceId ' + message.instanceId + ': ' + data.statusText);
+			return;
+		}
+
+		logger.error(`webhook sended to instanceId ${message.instanceId}: ${error?.message}`);
+	} catch (error) {
+		logger.error(`webhook sended to instanceId ${message.instanceId}: ${error?.message}`);
+	}
 }
 
 function getTypeMessage(message) {
@@ -76,11 +98,12 @@ function handleMessage(wbot, data, instanceId) {
 async function listenMessage(wbot, instanceId) {
 	try {
 		wbot.ev.on('messages.upsert', async (data) => {
+			logger.info('listenMessage upsert to instanceId ' + instanceId + ': ' + JSON.stringify(data));
 			handleMessage(wbot, data, instanceId);
 		});
 
 		wbot.ev.on('messages.update', (data) => {
-			logger.info('listenMessage update to instanceId ' + instanceId + ':', data);
+			logger.info('listenMessage update to instanceId ' + instanceId + ': ' + JSON.stringify(data));
 		});
 	} catch (error) {
 		logger.error('listenMessage error', error);
