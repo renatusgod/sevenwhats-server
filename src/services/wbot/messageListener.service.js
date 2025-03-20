@@ -25,23 +25,23 @@ async function sendMessageWebhook(url, message) {
 	// 	);
 
 	try {
-		const {data} = await axios.post(url, message, {
+		const result = await axios.post(url, message, {
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		});
 	
-		if (!data) {
+		if (!result) {
 			logger.info('webhook without response to instanceId ' + message.instanceId);
 			return;
 		}
 	
-		if (data.status === 200) {
-			logger.info('webhook sended to instanceId ' + message.instanceId + ': ' + data.statusText);
+		if (result.status === 200) {
+			logger.info('webhook sended to instanceId ' + message.instanceId + ': ' + result.statusText);
 			return;
 		}
 
-		logger.error(`webhook sended to instanceId ${message.instanceId}: ${error?.message}`);
+		logger.error(`webhook sended to instanceId ${message.instanceId}: ${result}`);
 	} catch (error) {
 		logger.error(`webhook sended to instanceId ${message.instanceId}: ${error?.message}`);
 	}
